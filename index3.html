@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Healthy Food Subscription Form</title>
+    <style>
+    body {
+        background-color: #eee;
+    }
+
+    form {
+        margin: 20px auto;
+        width: 50%;
+        text-align: left;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0px 0px 10px #aaa;
+    }
+
+    label, input, select {
+        display: block;
+        margin-bottom: 10px;
+        color: #333;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+    }
+
+    input[type="text"], input[type="number"], select {
+        width: 100%;
+        padding: 8px;
+        /* border: none; */
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type="submit"] {
+        background-color: purple;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .total {
+        margin-top: 20px;
+        font-size: 18px;
+        color: purple;
+    }
+
+    .error {
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    </style>
+</head>
+<body>
+    <form id="subscription-form" action="#" method="post">
+        <label for="name">Name:</label>
+		<input type="text" id="name" name="name">
+        <label for="address">Address:</label>
+        <select id="address" name="address">
+			<option value="">Choose your address</option>
+			<option value="khartoum">khartoum</option>
+			<option value="bahry">bahry</option>
+			<option value="omdurman">omdurman</option>
+		</select>
+        <label for="meal-size">Meal size:</label>
+        <select id="meal-size" name="meal-size" required>
+            <option value="">Select meal size</option>
+            <option value="small">Small - 100 SDG</option>
+            <option value="medium">Medium - 200 SDG</option>
+            <option value="large">Large - 300 SDG</option>
+        </select>
+        <label>Drink:</label>
+        <div style="display: flex;">
+        <input type="radio" id="drink1" name="drink" value="no" checked>
+            <label for="drink1">No</label>
+            <input type="radio" id="drink2" name="drink" value="yes">
+            <label for="drink2">Yes - 50 SDG</label>
+
+        </div>
+        <option value="">Days per week:</option>
+        <input type="number" id="days-per-week" name="days-per-week" placeholder="Days per week" required>
+        <input type="submit" value="Subscribe">
+        <div class="total"></div>
+    </form>
+
+    <script>
+        function calculateTotal() {
+            const address = document.getElementById("address").value;
+            const mealSize = document.getElementById("meal-size").value;
+            const drink = document.querySelector('input[name="drink"]:checked').value;
+            const daysPerWeek = parseInt(document.getElementById("days-per-week").value);
+            let total = 0;
+
+            if (address === "khartoum") {
+                total += 2000;
+            } else if (address === "bahry") {
+                total += 3000;
+            } else if (mealSize === "omdurman") {
+                total += 4000;
+            }
+
+            if (mealSize === "small") {
+                total += 100;
+            } else if (mealSize === "medium") {
+                total += 200;
+            } else if (mealSize === "large") {
+                total += 300;
+            }
+
+            if (drink === "yes") {
+                total += 50;
+            }
+
+            if (daysPerWeek && daysPerWeek > 0) {
+                total *= daysPerWeek;
+                document.querySelector(".total").innerHTML = "Total: " + total + " SDG per week";
+            } else {
+                document.querySelector(".total").innerHTML = "";
+            }
+        }
+
+        const form = document.getElementById("subscription-form");
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+            calculateTotal();
+        });
+    </script>
+</body>
+</html>
